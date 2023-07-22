@@ -71,17 +71,27 @@ const ControlPanel: FC<AdminProps> = ({
 
 export const Admin = () => {
   const [isModal, setIsModal] = useState(false);
+  
+  //string states
+  
   const [roomName, setRoomName] = useState<string>('');
+  const [descriptionRoom, setDescriptionRoom] = useState<string>('');
+
+  //number states
+
   const [indexRoom, setRoomIndex] = useState<number>();
   const [placesRoom, setPlacesRoom] = useState<number>();
-  const [descriptionRoom, setDescriptionRoom] = useState<string>('')
 
-  function parseRoom(name: string, isModal: boolean, indexRoom: number, placesRoom: number, description: string) {
+  function parseRoom(
+    name: string, 
+    isModal: boolean, 
+    indexRoom: number, 
+    placesRoom: number, 
+    description: string
+    ) {
     console.log(name, isModal, indexRoom, placesRoom);
-    setRoomName(name);
-    setIsModal(isModal);
-    setRoomIndex(indexRoom);
-    setPlacesRoom(placesRoom);
+    setRoomName(name); setIsModal(isModal); 
+    setRoomIndex(indexRoom); setPlacesRoom(placesRoom); 
     setDescriptionRoom(description)
   }
 
