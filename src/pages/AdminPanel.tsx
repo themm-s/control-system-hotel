@@ -7,7 +7,8 @@ interface AdminProps {
   setModal: Dispatch<SetStateAction<boolean>>;
   roomName: string;
   indexRoom: number | undefined;
-  placesRoom: any
+  placesRoom: any;
+  description: string
 }
 
 const ControlPanel: FC<AdminProps> = ({
@@ -15,7 +16,8 @@ const ControlPanel: FC<AdminProps> = ({
   setModal,
   roomName,
   indexRoom,
-  placesRoom
+  placesRoom,
+  description
 }) => {
 
   function deleteRoom() {
@@ -24,13 +26,13 @@ const ControlPanel: FC<AdminProps> = ({
       delete rooms[indexRoom];
     }
   }
-  
+
   function roomPlace(place: number) {
-    let randomPlace = Math.floor(Math.random() * place + 1)
+    let randomPlace = ('Места: ' + Math.floor(Math.random() * place + 1));
     if (randomPlace == placesRoom) {
-      return (randomPlace + ' / ' + placesRoom + ' Места заполнены!')
+      return (randomPlace + ' / ' + placesRoom + ' Места заполнены!');
     }
-    return (randomPlace + ' / ' + placesRoom)
+    return (randomPlace + ' / ' + placesRoom);
   }
 
   useEffect(() => {
@@ -40,7 +42,8 @@ const ControlPanel: FC<AdminProps> = ({
     <Modal
       isVisible={isModal}
       title={roomName}
-      content={roomPlace(placesRoom)}
+      description={description}
+      content={`${roomPlace(placesRoom)}`}
       footer={
         <>
           <button
@@ -71,13 +74,15 @@ export const Admin = () => {
   const [roomName, setRoomName] = useState<string>('');
   const [indexRoom, setRoomIndex] = useState<number>();
   const [placesRoom, setPlacesRoom] = useState<number>();
+  const [descriptionRoom, setDescriptionRoom] = useState<string>('')
 
-  function parseRoom(name: string, isModal: boolean, indexRoom: number, placesRoom: number) {
+  function parseRoom(name: string, isModal: boolean, indexRoom: number, placesRoom: number, description: string) {
     console.log(name, isModal, indexRoom, placesRoom);
-    setRoomName(name)
+    setRoomName(name);
     setIsModal(isModal);
     setRoomIndex(indexRoom);
-    setPlacesRoom(placesRoom)
+    setPlacesRoom(placesRoom);
+    setDescriptionRoom(description)
   }
 
   return (
@@ -89,11 +94,12 @@ export const Admin = () => {
           roomName={roomName}
           indexRoom={indexRoom}
           placesRoom={placesRoom}
+          description={descriptionRoom}
         />
         {rooms.map((room, index) => (
           <>
             <div className="hover:bg-gray-200 cursor-pointer pb-4" onClick={() => {
-              parseRoom(room.name, true, index, room.places);
+              parseRoom(room.name, true, index, room.places, room.description);
             }}>
               <h1 className="text-center mt-3">
                 {room.name}
