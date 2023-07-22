@@ -26,7 +26,10 @@ const ControlPanel: FC<AdminProps> = ({
   }
   
   function roomPlace(place: number) {
-    let randomPlace = Math.floor(Math.random() * place)
+    let randomPlace = Math.floor(Math.random() * place + 1)
+    if (randomPlace == placesRoom) {
+      return (randomPlace + ' / ' + placesRoom + ' Места заполнены!')
+    }
     return (randomPlace + ' / ' + placesRoom)
   }
 
