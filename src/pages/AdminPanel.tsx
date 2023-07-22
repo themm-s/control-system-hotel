@@ -89,7 +89,7 @@ export const Admin = () => {
     placesRoom: number, 
     description: string
     ) {
-    console.log(name, isModal, indexRoom, placesRoom);
+    console.log(rooms[indexRoom]);
     setRoomName(name); setIsModal(isModal); 
     setRoomIndex(indexRoom); setPlacesRoom(placesRoom); 
     setDescriptionRoom(description)
