@@ -1,6 +1,6 @@
 import { Modal } from "components/Modal";
 import { rooms } from "constants";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 
 interface AdminProps {
   isModal: boolean;
@@ -31,15 +31,11 @@ const ControlPanel: FC<AdminProps> = ({
   /// Функиця которая генерирует рандомные занятые места в хостеле
   function roomPlace(place: number) {
     let randomPlace: number = (Math.floor(Math.random() * place));
-    console.log(randomPlace, placesRoom, randomPlace == placesRoom)
     if (randomPlace == placesRoom) {
       return (`${randomPlace} / ${placesRoom} Места заполнены!`);
     } 
     return (`Места: ${randomPlace} / ${placesRoom}`)
   }
-
-  useEffect(() => {
-  }, [indexRoom]);
 
   return (
     <Modal
@@ -47,20 +43,26 @@ const ControlPanel: FC<AdminProps> = ({
       title={roomName}
       description={description}
       places={roomPlace(placesRoom)}
+      settings={
+          <button
+            className="w-full text-gray-800 bg-gray-200 rounded-md 
+            outline-none border ring-offset-2"
+            onClick={() => setModal(false)}>
+            Настройки
+          </button>
+      }
       footer={
         <>
           <button
             className="w-1/2 text-gray-800 bg-green-500 rounded-md 
             outline-none border ring-offset-2"
-            onClick={deleteRoom}
-          >
+            onClick={deleteRoom}>
             Да
           </button>
           <button
             className="w-1/2 text-gray-800 bg-red-500 rounded-md 
             outline-none border ring-offset-2"
-            onClick={() => setModal(false)}
-          >
+            onClick={() => setModal(false)}>
             Нет
           </button>
         </>
