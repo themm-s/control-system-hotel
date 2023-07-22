@@ -20,6 +20,7 @@ const ControlPanel: FC<AdminProps> = ({
   description
 }) => {
 
+  /// Функция удаления комнаты при нажатии "Да"
   function deleteRoom() {
     setModal(false);
     if (indexRoom !== undefined) {
@@ -27,6 +28,7 @@ const ControlPanel: FC<AdminProps> = ({
     }
   }
 
+  /// Функиця которая генерирует рандомные занятые места в хостеле
   function roomPlace(place: number) {
     let randomPlace: number = (Math.floor(Math.random() * place));
     console.log(randomPlace, placesRoom, randomPlace == placesRoom)
@@ -91,10 +93,15 @@ export const Admin = () => {
     description: string
     ) {
     console.log(rooms[indexRoom]);
+    /// Имя комнаты
     setRoomName(name); 
-    setIsModal(isModal); 
-    setRoomIndex(indexRoom); 
-    setPlacesRoom(placesRoom); 
+    /// Модальное окно активное или нет
+    setIsModal(isModal);
+    /// Индекс румы в объекте
+    setRoomIndex(indexRoom);
+    /// Места в руме
+    setPlacesRoom(placesRoom);
+    /// Описание румы в модалке
     setDescriptionRoom(description)
   }
 
