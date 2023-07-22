@@ -3,14 +3,14 @@ import { useEffect } from "react";
 interface IModal {
   isVisible?: boolean;
   title: string;
-  content: string;
+  places: any
   description: string;
   footer: string | JSX.Element;
   onClose: () => void;
   children?: React.ReactNode;
 }
 
-export const Modal: React.FC<IModal> = ({ isVisible = false, title, content, footer, onClose, description }) => {
+export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, footer, onClose, description }) => {
   const keydownHandler = ({ key }: KeyboardEvent) => {
     switch (key) {
       case 'Escape':
@@ -41,7 +41,7 @@ export const Modal: React.FC<IModal> = ({ isVisible = false, title, content, foo
                 </h4>
                 <p className="mt-2 text-[15px] w-full text-gray-500">
                   {description}
-                  <br/>{content}
+                  <br/>{places}
                 </p>
                 <div className="flex items-center gap-2 mt-3 sm:flex">
                   {footer}

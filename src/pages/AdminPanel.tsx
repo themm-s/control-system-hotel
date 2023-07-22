@@ -28,11 +28,12 @@ const ControlPanel: FC<AdminProps> = ({
   }
 
   function roomPlace(place: number) {
-    let randomPlace = ('Места: ' + Math.floor(Math.random() * place + 1));
+    let randomPlace: number = (Math.floor(Math.random() * place));
+    console.log(randomPlace, placesRoom, randomPlace == placesRoom)
     if (randomPlace == placesRoom) {
-      return (randomPlace + ' / ' + placesRoom + ' Места заполнены!');
-    }
-    return (randomPlace + ' / ' + placesRoom);
+      return (`${randomPlace} / ${placesRoom} Места заполнены!`);
+    } 
+    return (`Места: ${randomPlace} / ${placesRoom}`)
   }
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const ControlPanel: FC<AdminProps> = ({
       isVisible={isModal}
       title={roomName}
       description={description}
-      content={`${roomPlace(placesRoom)}`}
+      places={roomPlace(placesRoom)}
       footer={
         <>
           <button
@@ -80,7 +81,7 @@ export const Admin = () => {
   //number states
 
   const [indexRoom, setRoomIndex] = useState<number>();
-  const [placesRoom, setPlacesRoom] = useState<number>();
+  const [placesRoom, setPlacesRoom] = useState<number>(0);
 
   function parseRoom(
     name: string, 
@@ -90,8 +91,10 @@ export const Admin = () => {
     description: string
     ) {
     console.log(rooms[indexRoom]);
-    setRoomName(name); setIsModal(isModal); 
-    setRoomIndex(indexRoom); setPlacesRoom(placesRoom); 
+    setRoomName(name); 
+    setIsModal(isModal); 
+    setRoomIndex(indexRoom); 
+    setPlacesRoom(placesRoom); 
     setDescriptionRoom(description)
   }
 
