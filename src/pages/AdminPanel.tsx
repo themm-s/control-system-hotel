@@ -7,21 +7,27 @@ interface AdminProps {
   setModal: Dispatch<SetStateAction<boolean>>;
   roomName: string;
   indexRoom: number | undefined;
+  placesRoom: any
 }
 
 const ControlPanel: FC<AdminProps> = ({
   isModal,
   setModal,
   roomName,
-  indexRoom
+  indexRoom,
+  placesRoom
 }) => {
-  console.log(isModal);
 
   function deleteRoom() {
     setModal(false);
     if (indexRoom !== undefined) {
       delete rooms[indexRoom];
     }
+  }
+  
+  function roomPlace(place: number) {
+    let randomPlace = Math.floor(Math.random() * place)
+    return (randomPlace + ' / ' + placesRoom)
   }
 
   useEffect(() => {
@@ -31,7 +37,7 @@ const ControlPanel: FC<AdminProps> = ({
     <Modal
       isVisible={isModal}
       title={roomName}
-      content={"Действительно удалить это?"}
+      content={roomPlace(placesRoom)}
       footer={
         <>
           <button
@@ -61,6 +67,15 @@ export const Admin = () => {
   const [isModal, setIsModal] = useState(false);
   const [roomName, setRoomName] = useState<string>('');
   const [indexRoom, setRoomIndex] = useState<number>();
+  const [placesRoom, setPlacesRoom] = useState<number>();
+
+  function parseRoom(name: string, isModal: boolean, indexRoom: number, placesRoom: number) {
+    console.log(name, isModal, indexRoom, placesRoom);
+    setRoomName(name)
+    setIsModal(isModal);
+    setRoomIndex(indexRoom);
+    setPlacesRoom(placesRoom)
+  }
 
   return (
     <>
@@ -70,13 +85,12 @@ export const Admin = () => {
           setModal={setIsModal}
           roomName={roomName}
           indexRoom={indexRoom}
+          placesRoom={placesRoom}
         />
         {rooms.map((room, index) => (
           <>
             <div className="hover:bg-gray-200 cursor-pointer pb-4" onClick={() => {
-              setRoomName(room.name);
-              setIsModal(true);
-              setRoomIndex(index);
+              parseRoom(room.name, true, index, room.places);
             }}>
               <h1 className="text-center mt-3">
                 {room.name}

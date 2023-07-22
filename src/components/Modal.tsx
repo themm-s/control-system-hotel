@@ -3,7 +3,7 @@ import { useEffect } from "react";
 interface IModal {
   isVisible?: boolean;
   title: string;
-  content: string;
+  content: number
   footer: string | JSX.Element;
   onClose: () => void;
   children?: React.ReactNode;
