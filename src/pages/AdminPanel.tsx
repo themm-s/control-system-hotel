@@ -21,20 +21,23 @@ const ControlPanel: FC<AdminProps> = ({
 }) => {
 
   const [isSettingsModal, setSettingsModal] = useState<boolean>(false);
-  const free = 
-  <div className="flex mt-2 justify-center mx-auto w-full text-center">
-          Статус:
-          <div className="justify-center rounded-lg border mx-2 w-1/3 border-green-500 text-center">
-            Свободен
-          </div>
+  const test = () => {
+    const free =
+      <div className="flex mt-2 justify-center mx-auto w-full text-center">
+        Статус:
+        <div className="justify-center rounded-lg border mx-2 w-1/3 border-green-500 text-center">
+          Свободен
         </div>
-  const busy =
-    <div className="flex mt-2 justify-center mx-auto w-full text-center">
-      Статус:
-      <div className="justify-center rounded-lg border mx-2 w-1/3 border-red-500 text-center">
-        Занят
-      </div>
-    </div>;
+      </div>;
+    const busy =
+      <div className="flex mt-2 justify-center mx-auto w-full text-center">
+        Статус:
+        <div className="justify-center rounded-lg border mx-2 w-1/3 border-red-500 text-center">
+          Занят
+        </div>
+      </div>;
+      return {free, busy}
+  };
   let randomPlace: number;
 
   /// Функция удаления комнаты при нажатии "Да"
@@ -57,10 +60,11 @@ const ControlPanel: FC<AdminProps> = ({
 
   /// Функция которая определяет статус хостела
   function hotelStatus() {
-    if(randomPlace <= 4) {
-      return free
+    const {free, busy} = test()
+    if (randomPlace <= 4) {
+      return free;
     }
-    return busy
+    return busy;
   }
 
   return (
@@ -103,7 +107,7 @@ const ControlPanel: FC<AdminProps> = ({
         places={hotelStatus()}
         onClose={() => setSettingsModal(false)}
         footer={""}
-        />
+      />
     </>
   );
 };
