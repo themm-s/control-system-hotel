@@ -6,9 +6,9 @@ interface AdminProps {
   isModal: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
   roomName: string;
-  indexRoom: number | undefined;
-  placesRoom: any;
-  description: string
+  indexRoom?: number;
+  placesRoom?: any;
+  description?: string;
 }
 
 const ControlPanel: FC<AdminProps> = ({
@@ -20,6 +20,9 @@ const ControlPanel: FC<AdminProps> = ({
   description
 }) => {
 
+  const [isSettingsModal, setSettingsModal] = useState<boolean>(false);
+  let randomPlace: number
+
   /// Функция удаления комнаты при нажатии "Да"
   function deleteRoom() {
     setModal(false);
@@ -28,57 +31,78 @@ const ControlPanel: FC<AdminProps> = ({
     }
   }
 
-  /// Функиця которая генерирует рандомные занятые места в хостеле
+  /// Функиция которая генерирует рандомные занятые места в хостеле
   function roomPlace(place: number) {
-    let randomPlace: number = (Math.floor(Math.random() * place));
+    randomPlace = (Math.floor(Math.random() * place));
     if (randomPlace == placesRoom) {
       return (`${randomPlace} / ${placesRoom} Места заполнены!`);
-    } 
-    return (`Места: ${randomPlace} / ${placesRoom}`)
+    }
+    return (`Места: ${randomPlace} / ${placesRoom}`);
+  }
+
+  /// Функция которая определяет статус хостела
+  function hotelStatus() {
+    if(randomPlace <= 4) {
+      return (
+        <div>Свободен</div>
+      )
+    }
+    return (
+      <div>Занят</div>
+    )
   }
 
   return (
-    <Modal
-      isVisible={isModal}
-      title={roomName}
-      description={description}
-      places={roomPlace(placesRoom)}
-      settings={
+    <>
+      <Modal
+        isVisible={isModal}
+        title={roomName}
+        description={description}
+        places={roomPlace(placesRoom)}
+        preFooter={
           <button
             className="w-full text-gray-800 bg-gray-200 rounded-md 
             outline-none border ring-offset-2"
-            onClick={() => setModal(false)}>
+            onClick={() => setSettingsModal(true)}>
             Настройки
           </button>
-      }
-      footer={
-        <>
-          <button
-            className="w-1/2 text-gray-800 bg-green-500 rounded-md 
+        }
+        footer={
+          <>
+            <button
+              className="w-1/2 text-gray-800 bg-green-500 rounded-md 
             outline-none border ring-offset-2"
-            onClick={deleteRoom}>
-            Да
-          </button>
-          <button
-            className="w-1/2 text-gray-800 bg-red-500 rounded-md 
+              onClick={deleteRoom}>
+              Да
+            </button>
+            <button
+              className="w-1/2 text-gray-800 bg-red-500 rounded-md 
             outline-none border ring-offset-2"
-            onClick={() => setModal(false)}>
-            Нет
-          </button>
-        </>
-      }
-      onClose={() => setModal(false)
-      }
-    />
+              onClick={() => setModal(false)}>
+              Нет
+            </button>
+          </>
+        }
+        onClose={() => setModal(false)
+        }
+      />
+      <Modal
+        isVisible={isSettingsModal}
+        title={`Настройки`}
+        places={hotelStatus()}
+        preFooter={"2"}
+        footer={"1"}
+        onClose={() => setSettingsModal(false)}
+        />
+    </>
   );
 };
 
-
 export const Admin = () => {
   const [isModal, setIsModal] = useState(false);
-  
+
   //string states
-  
+
   const [roomName, setRoomName] = useState<string>('');
   const [descriptionRoom, setDescriptionRoom] = useState<string>('');
 
@@ -88,15 +112,15 @@ export const Admin = () => {
   const [placesRoom, setPlacesRoom] = useState<number>(0);
 
   function parseRoom(
-    name: string, 
-    isModal: boolean, 
-    indexRoom: number, 
-    placesRoom: number, 
+    name: string,
+    isModal: boolean,
+    indexRoom: number,
+    placesRoom: number,
     description: string
-    ) {
+  ) {
     console.log(rooms[indexRoom]);
     /// Имя комнаты
-    setRoomName(name); 
+    setRoomName(name);
     /// Модальное окно активное или нет
     setIsModal(isModal);
     /// Индекс румы в объекте
@@ -104,7 +128,7 @@ export const Admin = () => {
     /// Места в руме
     setPlacesRoom(placesRoom);
     /// Описание румы в модалке
-    setDescriptionRoom(description)
+    setDescriptionRoom(description);
   }
 
   return (

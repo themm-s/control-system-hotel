@@ -3,15 +3,16 @@ import { useEffect } from "react";
 interface IModal {
   isVisible?: boolean;
   title: string;
-  places: any
-  description: string;
-  settings: string | JSX.Element;
+  places?: any
+  description?: string;
+  status?: string | JSX.Element
+  preFooter?: string | JSX.Element;
   footer: string | JSX.Element;
   onClose: () => void;
   children?: React.ReactNode;
 }
 
-export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, footer, onClose, description, settings }) => {
+export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, footer, onClose, description, preFooter }) => {
   const keydownHandler = ({ key }: KeyboardEvent) => {
     switch (key) {
       case 'Escape':
@@ -45,9 +46,8 @@ export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, foot
                   <br/>{places}
                 </p>
                 <p className="flex my-6 gap-2">
-                {settings}
+                {preFooter}
                 </p>
-                Удалить?
                 <div className="flex items-center gap-2 mt-3 sm:flex">
                   {footer}
                 </div>
