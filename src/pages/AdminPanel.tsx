@@ -21,22 +21,16 @@ const ControlPanel: FC<AdminProps> = ({
 }) => {
 
   const [isSettingsModal, setSettingsModal] = useState<boolean>(false);
-  const test = () => {
-    const free =
+  const CheckStatus = (bool: boolean) => {
+    return (
       <div className="flex mt-2 justify-center mx-auto w-full text-center">
         Статус:
-        <div className="justify-center rounded-lg border mx-2 w-1/3 border-green-500 text-center">
-          Свободен
+        <div className={`justify-center rounded-lg border mx-2 w-1/3
+          ${bool ? "border-green-500" : "border-red-500"} text-center`}>
+          {bool ? "Свободен" : "Занят"}
         </div>
-      </div>;
-    const busy =
-      <div className="flex mt-2 justify-center mx-auto w-full text-center">
-        Статус:
-        <div className="justify-center rounded-lg border mx-2 w-1/3 border-red-500 text-center">
-          Занят
-        </div>
-      </div>;
-      return {free, busy}
+      </div>
+    );
   };
   let randomPlace: number;
 
@@ -60,11 +54,7 @@ const ControlPanel: FC<AdminProps> = ({
 
   /// Функция которая определяет статус хостела
   function hotelStatus() {
-    const {free, busy} = test()
-    if (randomPlace <= 4) {
-      return free;
-    }
-    return busy;
+    return CheckStatus(randomPlace <= 4);
   }
 
   return (
