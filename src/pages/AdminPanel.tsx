@@ -1,6 +1,6 @@
 import { Modal } from "components/Modal";
 import { rooms } from "constants";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 
 interface AdminProps {
   isModal: boolean;
@@ -21,7 +21,7 @@ const ControlPanel: FC<AdminProps> = ({
 }) => {
 
   const [isSettingsModal, setSettingsModal] = useState<boolean>(false);
-  const CheckStatus = (bool: boolean) => {
+  const checkStatus = (bool: boolean) => {
     return (
       <div className="flex mt-2 justify-center mx-auto w-full text-center">
         Статус:
@@ -38,7 +38,7 @@ const ControlPanel: FC<AdminProps> = ({
   function deleteRoom() {
     setModal(false);
     if (indexRoom !== undefined) {
-      delete rooms[indexRoom];
+      rooms.splice(indexRoom, 1);
     }
   }
 
@@ -54,7 +54,7 @@ const ControlPanel: FC<AdminProps> = ({
 
   /// Функция которая определяет статус хостела
   function hotelStatus() {
-    return CheckStatus(randomPlace <= 4);
+    return checkStatus(randomPlace <= 4);
   }
 
   return (
