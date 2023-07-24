@@ -11,6 +11,14 @@ interface AdminProps {
   description?: string;
 }
 
+interface IParseRooms {
+  name: string,
+  isModal: boolean,
+  indexRoom: number,
+  placesRoom: number,
+  description: string,
+}
+
 const ControlPanel: FC<AdminProps> = ({
   isModal,
   setModal,
@@ -21,7 +29,7 @@ const ControlPanel: FC<AdminProps> = ({
 }) => {
 
   const [isSettingsModal, setSettingsModal] = useState<boolean>(false);
-  
+
   /// Функция удаления комнаты при нажатии "Да"
   function deleteRoom() {
     setModal(false);
@@ -91,7 +99,7 @@ export const Admin = () => {
   function placesRooms(places: number) {
     let randomPlaces = Math.floor(Math.random() * places + 1);
     if (randomPlaces == null) {
-      return null
+      return null;
     }
     console.log(`PLACES / 2 =  ${places / 2}`);
     console.log(`RANDOM PLACES ${randomPlaces}`);
@@ -114,13 +122,13 @@ export const Admin = () => {
     console.log(placesRoom);
   }, [placesRoom]);
 
-  function parseRoom(
-    name: string,
-    isModal: boolean,
-    indexRoom: number,
-    placesRoom: number,
-    description: string
-  ) {
+  const parseRoom = ({
+    name,
+    isModal,
+    indexRoom,
+    placesRoom,
+    description
+  }: IParseRooms) => {
     console.log(rooms[indexRoom]);
     /// Имя комнаты
     setRoomName(name);
@@ -148,7 +156,7 @@ export const Admin = () => {
         {rooms.map((room, index) => (
           <>
             <div className="hover:bg-gray-200 cursor-pointer pb-4" onClick={() => {
-              parseRoom(room.name, true, index, room.places, room.description);
+              parseRoom({ room.name, true, index, room.places, room.description });
             }}>
               <h1 className="text-center mt-3">
                 {room.name}
