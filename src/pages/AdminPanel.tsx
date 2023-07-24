@@ -30,12 +30,12 @@ export const Admin = () => {
     if (randomPlaces == null) {
       return null;
     }
-    console.log(`PLACES / 2 =  ${places / 2}`);
-    console.log(`RANDOM PLACES ${randomPlaces}`);
+    // console.log(`PLACES / 2 =  ${places / 2}`);
+    // console.log(`RANDOM PLACES ${randomPlaces}`);
     let bool = randomPlaces >= places / 2;
     return (
       <>
-        <h1>{!bool ? `Свободных мест ${randomPlaces} / ${places}` : 'Отель забронирован'}</h1>
+        <h1>{!bool ? `Свободных мест ${randomPlaces} / ${places}` : `Отель забронирован ${randomPlaces} / ${places}`}</h1>
         <div className="flex mt-2 justify-center ml-[5%] w-full text-center">
           Статус:
           <div className={`justify-center rounded-lg ml-2 border w-1/2
@@ -48,7 +48,7 @@ export const Admin = () => {
   }
 
   useEffect(() => {
-    console.log(placesRoom);
+    // console.log(placesRoom);
   }, [placesRoom]);
 
   const parseRoom = ({
@@ -58,7 +58,7 @@ export const Admin = () => {
     placesRoom,
     description
   }: IParseRooms) => {
-    console.log(rooms[indexRoom]);
+    // console.log(rooms[indexRoom]);
     /// Имя комнаты
     setRoomName(name);
     /// Модальное окно активное или нет
