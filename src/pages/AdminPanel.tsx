@@ -99,23 +99,23 @@ export const Admin = () => {
   const [indexRoom, setRoomIndex] = useState<number>();
   const [placesRoom, setPlacesRoom] = useState<number>(0);
 
-  function test(places: number) {
+  /// Функция которая задает рандомное значение и возвращает элемент
+  function placesRooms(places: number) {
     let randomPlaces = Math.floor(Math.random() * places + 1);
+    if (randomPlaces == null) {
+      return null
+    }
     console.log(`PLACES / 2 =  ${places / 2}`);
     console.log(`RANDOM PLACES ${randomPlaces}`);
     let bool = randomPlaces >= places / 2;
     return (
       <>
-        <h1>{randomPlaces} / {places}</h1>
+        <h1>{!bool ? `Свободных мест ${randomPlaces} / ${places}` : 'Отель забронирован'}</h1>
         <div className="grid grid-cols-2 gap-2 mt-2 justify-center mx-auto w-full text-center">
           Статус:
           <div className={`justify-center rounded-lg border w-full
           ${!bool ? "border-green-500" : "border-red-500"} text-center`}>
-            {!bool ? "Свободен" : "Занят"}
-          </div>
-          Бронирование:
-          <div className="justify-center border rounded-lg border-green-500">
-            Забронирован
+            {!bool ? "Свободен" : "Забронирован"}
           </div>
         </div>
       </>
@@ -154,7 +154,7 @@ export const Admin = () => {
           setModal={setIsModal}
           roomName={roomName}
           indexRoom={indexRoom}
-          placesRoom={test(placesRoom)}
+          placesRoom={placesRooms(placesRoom)}
           description={descriptionRoom}
         />
         {rooms.map((room, index) => (
