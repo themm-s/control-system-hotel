@@ -1,15 +1,7 @@
-import { Modal } from "components/Modal";
 import { rooms } from "constants";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-interface AdminProps {
-  isModal: boolean;
-  setModal: Dispatch<SetStateAction<boolean>>;
-  roomName: string;
-  indexRoom?: number;
-  placesRoom?: any;
-  description?: string;
-}
+import { ControlPanel } from "../components/controlPanel/ControlPanel";
 
 interface IParseRooms {
   name: string,
@@ -18,69 +10,6 @@ interface IParseRooms {
   placesRoom: number,
   description: string,
 }
-
-const ControlPanel: FC<AdminProps> = ({
-  isModal,
-  setModal,
-  roomName,
-  indexRoom,
-  placesRoom,
-  description
-}) => {
-
-  const [isSettingsModal, setSettingsModal] = useState<boolean>(false);
-
-  /// Функция удаления комнаты при нажатии "Да"
-  function deleteRoom() {
-    setModal(false);
-    if (indexRoom !== undefined) {
-      rooms.splice(indexRoom, 1);
-    }
-  }
-
-  return (
-    <>
-      <Modal
-        isVisible={isModal}
-        title={roomName}
-        description={description}
-        places={placesRoom}
-        preFooter={
-          <button
-            className="w-full text-gray-800 bg-gray-200 rounded-md 
-            outline-none border ring-offset-2"
-            onClick={() => setSettingsModal(true)}>
-            Настройки
-          </button>
-        }
-        footer={
-          <>
-            <button
-              className="w-1/2 text-gray-800 bg-green-500 rounded-md 
-            outline-none border ring-offset-2"
-              onClick={deleteRoom}>
-              Да
-            </button>
-            <button
-              className="w-1/2 text-gray-800 bg-red-500 rounded-md 
-            outline-none border ring-offset-2"
-              onClick={() => setModal(false)}>
-              Нет
-            </button>
-          </>
-        }
-        onClose={() => setModal(false)
-        }
-      />
-      <Modal
-        isVisible={isSettingsModal}
-        title={`Настройки`}
-        onClose={() => setSettingsModal(false)}
-        footer={""}
-      />
-    </>
-  );
-};
 
 export const Admin = () => {
   const [isModal, setIsModal] = useState(false);
@@ -107,9 +36,9 @@ export const Admin = () => {
     return (
       <>
         <h1>{!bool ? `Свободных мест ${randomPlaces} / ${places}` : 'Отель забронирован'}</h1>
-        <div className="grid grid-cols-2 gap-2 mt-2 justify-center mx-auto w-full text-center">
+        <div className="flex mt-2 justify-center ml-[5%] w-full text-center">
           Статус:
-          <div className={`justify-center rounded-lg border w-full
+          <div className={`justify-center rounded-lg ml-2 border w-1/2
           ${!bool ? "border-green-500" : "border-red-500"} text-center`}>
             {!bool ? "Свободен" : "Забронирован"}
           </div>
@@ -140,7 +69,7 @@ export const Admin = () => {
     setPlacesRoom(placesRoom);
     /// Описание румы в модалке
     setDescriptionRoom(description);
-  }
+  };
 
   return (
     <>
@@ -155,8 +84,8 @@ export const Admin = () => {
         />
         {rooms.map((room, index) => (
           <>
-            <div className="hover:bg-gray-200 cursor-pointer pb-4" onClick={() => {
-              parseRoom({ room.name, true, index, room.places, room.description });
+            <div className="hover:bg-gray-200 cursor-pointer pb-4" key={index} onClick={() => {
+              parseRoom({name: room.name, isModal: true, placesRoom: room.places, description: room.description, indexRoom: index});
             }}>
               <h1 className="text-center mt-3">
                 {room.name}
@@ -171,3 +100,5 @@ export const Admin = () => {
     </>
   );
 };
+
+// room.name, true, index, room.places, room.description
