@@ -14,7 +14,7 @@ export const rooms: IHostel[] = [
     places: 8,
     busy: 6,
     icon: hotel,
-    description: "Описание 1",
+    description: "Отель расположен в центре города и предлагает номера с кондиционером и бесплатным Wi-Fi. В отеле есть ресторан, бар и терраса.",
     deleted: false
   },
   { 
@@ -22,7 +22,7 @@ export const rooms: IHostel[] = [
     places: 12,
     busy: 6,
     icon: hotel,
-    description: "Описание 2",
+    description: "Этот роскошный отель находится в самом сердце Берлина, в нескольких минутах ходьбы от знаменитого Бранденбургского ворота. В отеле есть рестораны, бары и спа-центр.",
     deleted: false
   },
   { 
@@ -30,7 +30,7 @@ export const rooms: IHostel[] = [
     places: 6,
     busy: 6,
     icon: hotel,
-    description: "Описание 3",
+    description: "Этот роскошный отель находится в парке размером 7 гектаров в центре города Баден-Баден. В отеле есть рестораны, бары и спа-центр.",
     deleted: false
   },
   { 
@@ -38,7 +38,7 @@ export const rooms: IHostel[] = [
     places: 10,
     busy: 6,
     icon: hotel,
-    description: "Описание 4",
+    description: "Этот роскошный отель находится в центре Мюнхена, всего в 5 минутах ходьбы от площади Мариенплац. В отеле есть рестораны, бары и спа-центр.",
     deleted: false
   },
   { 
@@ -46,7 +46,7 @@ export const rooms: IHostel[] = [
     places: 4,
     busy: 6,
     icon: hotel,
-    description: "Описание 5",
+    description: "Этот роскошный отель находится в центре Мюнхена, всего в 5 минутах ходьбы от площади Карлсплац. В отеле есть рестораны, бары и спа-центр.",
     deleted: false
   },
   { 
@@ -54,7 +54,7 @@ export const rooms: IHostel[] = [
     places: 8,
     busy: 6,
     icon: hotel,
-    description: "Описание 6",
+    description: "Этот роскошный отель находится в самом сердце Берлина, всего в нескольких минутах ходьбы от знаменитого улицы Курфюрстендамм. В отеле есть рестораны, бары и спа-центр.",
     deleted: false
   },
   { 
@@ -62,7 +62,7 @@ export const rooms: IHostel[] = [
     places: 14,
     busy: 6,
     icon: hotel,
-    description: "Описание 7",
+    description: "Этот роскошный отель находится в центре Мюнхена, всего в нескольких минутах ходьбы от площади Карлсплац. В отеле есть рестораны, бары и спа-центр.",
     deleted: false
   },
   { 
@@ -70,7 +70,7 @@ export const rooms: IHostel[] = [
     places: 6,
     busy: 6,
     icon: hotel,
-    description: "Описание 8",
+    description: "Этот роскошный отель находится в самом сердце Берлина, всего в нескольких минутах ходьбы от знаменитого улицы Фридрихштрассе. В отеле есть рестораны, бары и спа-центр.",
     deleted: false
   },
   { 
@@ -78,7 +78,7 @@ export const rooms: IHostel[] = [
     places: 12,
     busy: 6,
     icon: hotel,
-    description: "Описание 9",
+    description: "Этот роскошный отель находится в центре Мюнхена, всего в нескольких минутах ходьбы от площади Карлсплац. В отеле есть рестораны, бары и спа-центр.",
     deleted: false
   },
   { 
@@ -86,7 +86,7 @@ export const rooms: IHostel[] = [
     places: 8,
     busy: 6,
     icon: hotel,
-    description: "Описание 10",
+    description: "Этот роскошный отель находится в самом сердце Берлина, всего в нескольких минутах ходьбы от знаменитого Б",
     deleted: false
   }
 ]
