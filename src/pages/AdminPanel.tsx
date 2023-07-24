@@ -21,19 +21,7 @@ const ControlPanel: FC<AdminProps> = ({
 }) => {
 
   const [isSettingsModal, setSettingsModal] = useState<boolean>(false);
-  const checkStatus = (bool: boolean) => {
-    return (
-      <div className="flex mt-2 justify-center mx-auto w-full text-center">
-        Статус:
-        <div className={`justify-center rounded-lg border mx-2 w-1/3
-          ${bool ? "border-green-500" : "border-red-500"} text-center`}>
-          {bool ? "Свободен" : "Занят"}
-        </div>
-      </div>
-    );
-  };
-
-
+  
   /// Функция удаления комнаты при нажатии "Да"
   function deleteRoom() {
     setModal(false);
