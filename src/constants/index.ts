@@ -3,6 +3,7 @@ import { hotel } from "assets";
 interface IHostel {
   name: string;
   places: number;
+  busy: number,
   icon?: string;
   description: string,
   deleted: boolean
@@ -11,6 +12,7 @@ export const rooms: IHostel[] = [
   { 
     name: "Зеленый лес", 
     places: 8,
+    busy: 6,
     icon: hotel,
     description: "Описание 1",
     deleted: false
@@ -18,6 +20,7 @@ export const rooms: IHostel[] = [
   { 
     name: "Синий океан", 
     places: 12,
+    busy: 6,
     icon: hotel,
     description: "Описание 2",
     deleted: false
@@ -25,6 +28,7 @@ export const rooms: IHostel[] = [
   { 
     name: "Желтый дом", 
     places: 6,
+    busy: 6,
     icon: hotel,
     description: "Описание 3",
     deleted: false
@@ -32,6 +36,7 @@ export const rooms: IHostel[] = [
   { 
     name: "Красный камень", 
     places: 10,
+    busy: 6,
     icon: hotel,
     description: "Описание 4",
     deleted: false
@@ -39,6 +44,7 @@ export const rooms: IHostel[] = [
   { 
     name: "Розовый цветок", 
     places: 4,
+    busy: 6,
     icon: hotel,
     description: "Описание 5",
     deleted: false
@@ -46,6 +52,7 @@ export const rooms: IHostel[] = [
   { 
     name: "Оранжевый сок", 
     places: 8,
+    busy: 6,
     icon: hotel,
     description: "Описание 6",
     deleted: false
@@ -53,6 +60,7 @@ export const rooms: IHostel[] = [
   { 
     name: "Фиолетовый дракон", 
     places: 14,
+    busy: 6,
     icon: hotel,
     description: "Описание 7",
     deleted: false
@@ -60,6 +68,7 @@ export const rooms: IHostel[] = [
   { 
     name: "Белый снег", 
     places: 6,
+    busy: 6,
     icon: hotel,
     description: "Описание 8",
     deleted: false
@@ -67,6 +76,7 @@ export const rooms: IHostel[] = [
   { 
     name: "Черный кот", 
     places: 12,
+    busy: 6,
     icon: hotel,
     description: "Описание 9",
     deleted: false
@@ -74,6 +84,7 @@ export const rooms: IHostel[] = [
   { 
     name: "Коричневый медведь", 
     places: 8,
+    busy: 6,
     icon: hotel,
     description: "Описание 10",
     deleted: false

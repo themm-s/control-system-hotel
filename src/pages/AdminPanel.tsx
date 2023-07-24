@@ -32,7 +32,7 @@ const ControlPanel: FC<AdminProps> = ({
       </div>
     );
   };
-  let randomPlace: number;
+
 
   /// Функция удаления комнаты при нажатии "Да"
   function deleteRoom() {
@@ -42,28 +42,13 @@ const ControlPanel: FC<AdminProps> = ({
     }
   }
 
-  /// Функиция которая генерирует рандомные занятые места в хостеле
-  function roomPlace(place: number) {
-    randomPlace = (Math.floor(Math.random() * place));
-    hotelStatus();
-    if (randomPlace == placesRoom) {
-      return (`${randomPlace} / ${placesRoom} Места заполнены!`);
-    }
-    return (`Места: ${randomPlace} / ${placesRoom}`);
-  }
-
-  /// Функция которая определяет статус хостела
-  function hotelStatus() {
-    return checkStatus(randomPlace <= 4);
-  }
-
   return (
     <>
       <Modal
         isVisible={isModal}
         title={roomName}
         description={description}
-        places={roomPlace(placesRoom)}
+        places={placesRoom}
         preFooter={
           <button
             className="w-full text-gray-800 bg-gray-200 rounded-md 
@@ -94,7 +79,6 @@ const ControlPanel: FC<AdminProps> = ({
       <Modal
         isVisible={isSettingsModal}
         title={`Настройки`}
-        places={hotelStatus()}
         onClose={() => setSettingsModal(false)}
         footer={""}
       />
@@ -114,6 +98,35 @@ export const Admin = () => {
 
   const [indexRoom, setRoomIndex] = useState<number>();
   const [placesRoom, setPlacesRoom] = useState<number>(0);
+
+  function test(places: number) {
+    let randomPlaces = Math.floor(Math.random() * places + 1);
+    console.log(`PLACES / 2 =  ${places / 2}`);
+    console.log(`RANDOM PLACES ${randomPlaces}`);
+    let bool = randomPlaces >= places / 2;
+    return (
+      <>
+        <h1>{randomPlaces} / {places}</h1>
+        <div className="flex mt-2 justify-center mx-auto w-full text-center">
+          Статус:
+          <div className={`justify-center rounded-lg border mx-2 w-1/3
+          ${!bool ? "border-green-500" : "border-red-500"} text-center`}>
+            {!bool ? "Свободен" : "Занят"}
+          </div>
+        </div>
+        <div className="flex justify-center mt-2 w-full">
+          Бронирование:
+          <div className="justify-center mx-2 w-1/3 border rounded-lg border-green-500">
+            1
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  useEffect(() => {
+    console.log(placesRoom);
+  }, [placesRoom]);
 
   function parseRoom(
     name: string,
@@ -143,7 +156,7 @@ export const Admin = () => {
           setModal={setIsModal}
           roomName={roomName}
           indexRoom={indexRoom}
-          placesRoom={placesRoom}
+          placesRoom={test(placesRoom)}
           description={descriptionRoom}
         />
         {rooms.map((room, index) => (
