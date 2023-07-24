@@ -107,17 +107,15 @@ export const Admin = () => {
     return (
       <>
         <h1>{randomPlaces} / {places}</h1>
-        <div className="flex mt-2 justify-center mx-auto w-full text-center">
+        <div className="grid grid-cols-2 gap-2 mt-2 justify-center mx-auto w-full text-center">
           Статус:
-          <div className={`justify-center rounded-lg border mx-2 w-1/3
+          <div className={`justify-center rounded-lg border w-full
           ${!bool ? "border-green-500" : "border-red-500"} text-center`}>
             {!bool ? "Свободен" : "Занят"}
           </div>
-        </div>
-        <div className="flex justify-center mt-2 w-full">
           Бронирование:
-          <div className="justify-center mx-2 w-1/3 border rounded-lg border-green-500">
-            1
+          <div className="justify-center border rounded-lg border-green-500">
+            Забронирован
           </div>
         </div>
       </>
