@@ -9,7 +9,7 @@ interface AdminProps {
   indexRoom?: number;
   placesRoom?: any;
   description?: string;
-  settingsModal: string
+  settingsModal: () => void
 }
 
 export const ControlPanel: FC<AdminProps> = ({
