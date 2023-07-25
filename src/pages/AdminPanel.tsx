@@ -13,6 +13,7 @@ interface IParseRooms {
 
 export const Admin = () => {
   const [isModal, setIsModal] = useState(false);
+  const [isSettingsModal, setSettingsModal] = useState<boolean>();
 
   //string states
 
@@ -23,15 +24,12 @@ export const Admin = () => {
 
   const [indexRoom, setRoomIndex] = useState<number>();
   const [placesRoom, setPlacesRoom] = useState<number>(0);
+  const randomPlaces = 5
 
   /// Функция которая задает рандомное значение и возвращает элемент
-  function placesRooms(places: number) {
-    let randomPlaces = Math.floor(Math.random() * places + 1);
-    if (randomPlaces == null) {
-      return null;
-    }
-    // console.log(`PLACES / 2 =  ${places / 2}`);
-    // console.log(`RANDOM PLACES ${randomPlaces}`);
+  function placesRooms(places: any) {
+    console.log(`PLACES / 2 =  ${places / 2}`);
+    console.log(`RANDOM PLACES ${randomPlaces}`);
     let bool = randomPlaces >= places / 2;
     return (
       <>
@@ -48,8 +46,10 @@ export const Admin = () => {
   }
 
   useEffect(() => {
-    // console.log(placesRoom);
-  }, [placesRoom]);
+    console.log(placesRoom);
+    console.log(isSettingsModal);
+    console.log(randomPlaces)
+  }, [isSettingsModal]);
 
   const parseRoom = ({
     name,
@@ -77,11 +77,12 @@ export const Admin = () => {
         <ControlPanel
           isModal={isModal}
           setModal={setIsModal}
+          isSettingsModal={isSettingsModal}
+          setSettingsModal={setSettingsModal}
           roomName={roomName}
           indexRoom={indexRoom}
           placesRoom={placesRooms(placesRoom)}
           description={descriptionRoom}
-          settingsModal={() => placesRoom(placesRoom)}
         />
         {rooms.map((room, index) => (
           <>

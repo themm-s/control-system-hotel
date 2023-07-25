@@ -5,24 +5,26 @@ import { Dispatch, FC, SetStateAction, useState } from "react";
 interface AdminProps {
   isModal: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
+  isSettingsModal: boolean | undefined
+  setSettingsModal: Dispatch<SetStateAction<boolean | undefined>>
   roomName: string;
   indexRoom?: number;
   placesRoom?: any;
   description?: string;
-  settingsModal: () => void
+  settingsModal?: JSX.Element | null
 }
 
 export const ControlPanel: FC<AdminProps> = ({
   isModal,
   setModal,
+  isSettingsModal,
+  setSettingsModal,
   roomName,
   indexRoom,
   placesRoom,
   description,
   settingsModal
 }) => {
-
-  const [isSettingsModal, setSettingsModal] = useState<boolean>(false);
 
   /// Функция удаления комнаты при нажатии "Да"
   function deleteRoom() {
