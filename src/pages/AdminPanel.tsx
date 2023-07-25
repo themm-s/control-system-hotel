@@ -81,6 +81,7 @@ export const Admin = () => {
           indexRoom={indexRoom}
           placesRoom={placesRooms(placesRoom)}
           description={descriptionRoom}
+          settingsModal={}
         />
         {rooms.map((room, index) => (
           <>

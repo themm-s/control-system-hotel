@@ -9,6 +9,7 @@ interface AdminProps {
   indexRoom?: number;
   placesRoom?: any;
   description?: string;
+  settingsModal: string
 }
 
 export const ControlPanel: FC<AdminProps> = ({
@@ -17,7 +18,8 @@ export const ControlPanel: FC<AdminProps> = ({
   roomName,
   indexRoom,
   placesRoom,
-  description
+  description,
+  settingsModal
 }) => {
 
   const [isSettingsModal, setSettingsModal] = useState<boolean>(false);
@@ -68,8 +70,8 @@ export const ControlPanel: FC<AdminProps> = ({
         isVisible={isSettingsModal}
         title={`Настройки`}
         onClose={() => setSettingsModal(false)}
-        footer={""}
-      />
+        places={settingsModal}
+        />
     </>
   );
 };

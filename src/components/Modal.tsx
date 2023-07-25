@@ -7,7 +7,7 @@ interface IModal {
   description?: string;
   status?: string | JSX.Element
   preFooter?: string | JSX.Element;
-  footer: string | JSX.Element;
+  footer?: string | JSX.Element;
   onClose: () => void;
   children?: React.ReactNode;
 }
