@@ -4,7 +4,7 @@ interface IModal {
   isVisible: boolean;
   title: string;
   places?: any;
-  description?: string;
+  description?: JSX.Element;
   status?: string | JSX.Element;
   preFooter?: string | JSX.Element;
   footer?: string | JSX.Element;
@@ -35,13 +35,13 @@ export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, foot
           onClick={onClose}
         />
         <div className="flex items-center min-h-screen px-4 py-8">
-          <div className="relative w-full max-w-lg p-5 mx-auto bg-white rounded-md shadow-lg">
+          <div className="relative w-full max-w-lg p-5 mx-auto bg-black rounded-md shadow-lg border">
             <div className="sm:flex w-full">
               <div className="mt-2 text-center mx-auto w-full">
-                <h4 className="text-lg font-medium text-gray-800">
+                <h4 className="text-lg font-medium text-gray-400">
                   {title}
                 </h4>
-                <p className="mt-2 text-[15px] w-full text-gray-500">
+                <p className="mt-2 text-[15px] w-full text-gray-400">
                   {description}
                   <br />{places}
                 </p>

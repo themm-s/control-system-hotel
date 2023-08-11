@@ -77,7 +77,7 @@ export const Admin = () => {
   function placesRooms(places: any) {
     return (
       <>
-        <h1>{!reserve ? `Свободных мест ${randomPlaces} / ${places}` : `Отель забронирован ${randomPlaces} / ${places}`}</h1>
+        <h1>{!reserve ? `Свободных мест${"\u00A0"} ${randomPlaces} / ${places}` : `Отель забронирован${"\u00A0"} ${randomPlaces} / ${places}`}</h1>
         <div className="flex mt-2 justify-center ml-[5%] w-full text-center">
           Статус:
           <div className={`justify-center rounded-lg ml-2 border w-1/2
@@ -100,12 +100,12 @@ export const Admin = () => {
             <>
               <button
                 className="w-1/2 text-gray-800 bg-green-500 rounded-md 
-            outline-none border ring-offset-2"
+            outline-none border ring-offset-2 hover:bg-green-400"
                 onClick={deleteRoom}>
                 Да
               </button>
               <button
-                className="w-1/2 text-gray-800 bg-red-500 rounded-md 
+                className="w-1/2 text-gray-800 bg-red-500 hover:bg-red-400 rounded-md 
             outline-none border ring-offset-2"
                 onClick={() => setIsModal(false)}>
                 Нет
@@ -114,7 +114,7 @@ export const Admin = () => {
           }
           preFooter={
             <button
-              className="w-full text-gray-800 bg-gray-200 rounded-md 
+              className="w-full text-gray-200 bg-gray-700 rounded-md 
             outline-none border ring-offset-2"
               onClick={() => setSettingsModal(true)}>
               Настройки
@@ -125,12 +125,12 @@ export const Admin = () => {
         <Modal
           isVisible={isSettingsModal}
           title={"Настройки"}
-          places={placesRooms(placesRoom)}
-          preFooter={
+          description={placesRooms(placesRoom)}
+          places={
             <>
               <button
-                className="w-full text-gray-800 bg-gray-200 rounded-md 
-            outline-none border ring-offset-2"
+                className="w-full text-gray-300 bg-gray-700 rounded-md 
+            outline-none border ring-offset-2 hover:bg-gray-600"
                 onClick={() => setSettingsModal(false)}>
                 Закрыть
               </button>
@@ -140,13 +140,13 @@ export const Admin = () => {
           footer={
             <>
               <button
-                className="w-1/2 text-gray-800 bg-green-500 rounded-md 
+                className="w-1/2 text-gray-800 bg-green-500 hover:bg-green-400 rounded-md 
             outline-none border ring-offset-2"
                 onClick={() => freeRoom(indexRoom)}>
                 Отменить бронь
               </button>
               <button
-                className="w-1/2 text-gray-800 bg-red-500 rounded-md 
+                className="w-1/2 text-gray-800 bg-red-500 hover:bg-red-400 rounded-md 
             outline-none border ring-offset-2"
                 onClick={() => { reserveRoom(indexRoom); console.log(rooms[indexRoom]); }}>
                 Забронировать
@@ -156,7 +156,7 @@ export const Admin = () => {
         />
         {rooms.map((room, index) => (
           <>
-            <div className="hover:bg-gray-200 cursor-pointer pb-4" key={index} onClick={() => {
+            <div className="hover:bg-gray-950 cursor-pointer pb-4" key={index} onClick={() => {
               parseRoom({
                 name: room.name,
                 isModal: true,
