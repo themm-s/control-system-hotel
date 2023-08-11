@@ -1,7 +1,9 @@
+import { Modal } from "components/Modal";
 import { rooms } from "constants";
 import { useEffect, useState } from "react";
 
 import { ControlPanel } from "../components/controlPanel/ControlPanel";
+
 
 interface IParseRooms {
   name: string,
@@ -24,7 +26,14 @@ export const Admin = () => {
 
   const [indexRoom, setRoomIndex] = useState<number>();
   const [placesRoom, setPlacesRoom] = useState<number>(0);
-  const randomPlaces = 5
+  const randomPlaces = Math.floor(Math.random() * 12);
+
+  function deleteRoom() {
+    setIsModal(false);
+    if (indexRoom !== undefined) {
+      rooms.splice(indexRoom, 1);
+    }
+  }
 
   /// Функция которая задает рандомное значение и возвращает элемент
   function placesRooms(places: any) {
@@ -48,8 +57,8 @@ export const Admin = () => {
   useEffect(() => {
     console.log(placesRoom);
     console.log(isSettingsModal);
-    console.log(randomPlaces)
-  }, [isSettingsModal]);
+    console.log(randomPlaces);
+  }, []);
 
   const parseRoom = ({
     name,
@@ -74,7 +83,7 @@ export const Admin = () => {
   return (
     <>
       <div className="grid grid-cols-1 rounded-lg">
-        <ControlPanel
+        {/* <ControlPanel
           isModal={isModal}
           setModal={setIsModal}
           isSettingsModal={isSettingsModal}
@@ -83,11 +92,42 @@ export const Admin = () => {
           indexRoom={indexRoom}
           placesRoom={placesRooms(placesRoom)}
           description={descriptionRoom}
+        /> */}
+        <Modal
+          isVisible={isModal}
+          title={roomName}
+          description={descriptionRoom}
+          places={placesRooms(placesRoom)}
+          footer={
+            <>
+              <button
+                className="w-1/2 text-gray-800 bg-green-500 rounded-md 
+            outline-none border ring-offset-2"
+                onClick={deleteRoom}>
+                Да
+              </button>
+              <button
+                className="w-1/2 text-gray-800 bg-red-500 rounded-md 
+            outline-none border ring-offset-2"
+                onClick={() => setIsModal(false)}>
+                Нет
+              </button>
+            </>
+          }
+          preFooter={
+            <button
+              className="w-full text-gray-800 bg-gray-200 rounded-md 
+            outline-none border ring-offset-2"
+              onClick={() => setSettingsModal(true)}>
+              Настройки
+            </button>
+          }
+          onClose={() => setIsModal(false)}
         />
         {rooms.map((room, index) => (
           <>
             <div className="hover:bg-gray-200 cursor-pointer pb-4" key={index} onClick={() => {
-              parseRoom({name: room.name, isModal: true, placesRoom: room.places, description: room.description, indexRoom: index});
+              parseRoom({ name: room.name, isModal: true, placesRoom: room.places, description: room.description, indexRoom: index });
             }}>
               <h1 className="text-center mt-3">
                 {room.name}

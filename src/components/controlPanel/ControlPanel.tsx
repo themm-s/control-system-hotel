@@ -5,13 +5,13 @@ import { Dispatch, FC, SetStateAction, useState } from "react";
 interface AdminProps {
   isModal: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
-  isSettingsModal: boolean | undefined
-  setSettingsModal: Dispatch<SetStateAction<boolean | undefined>>
+  isSettingsModal: boolean | undefined;
+  setSettingsModal: Dispatch<SetStateAction<boolean | undefined>>;
   roomName: string;
   indexRoom?: number;
   placesRoom?: any;
   description?: string;
-  settingsModal?: JSX.Element | null
+  settingsModal?: JSX.Element | null;
 }
 
 export const ControlPanel: FC<AdminProps> = ({
@@ -27,12 +27,6 @@ export const ControlPanel: FC<AdminProps> = ({
 }) => {
 
   /// Функция удаления комнаты при нажатии "Да"
-  function deleteRoom() {
-    setModal(false);
-    if (indexRoom !== undefined) {
-      rooms.splice(indexRoom, 1);
-    }
-  }
 
   return (
     <>
@@ -73,7 +67,7 @@ export const ControlPanel: FC<AdminProps> = ({
         title={`Настройки`}
         onClose={() => setSettingsModal(false)}
         places={settingsModal}
-        />
+      />
     </>
   );
 };

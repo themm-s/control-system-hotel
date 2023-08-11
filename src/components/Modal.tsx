@@ -1,14 +1,14 @@
-import { useEffect } from "react";
+import { SetStateAction, useEffect } from "react";
 
 interface IModal {
-  isVisible?: boolean;
+  isVisible: boolean;
   title: string;
-  places?: any
+  places?: any;
   description?: string;
-  status?: string | JSX.Element
+  status?: string | JSX.Element;
   preFooter?: string | JSX.Element;
   footer?: string | JSX.Element;
-  onClose: () => void;
+  onClose: any;
   children?: React.ReactNode;
 }
 
@@ -43,10 +43,10 @@ export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, foot
                 </h4>
                 <p className="mt-2 text-[15px] w-full text-gray-500">
                   {description}
-                  <br/>{places}
+                  <br />{places}
                 </p>
                 <p className="flex my-6 gap-2">
-                {preFooter}
+                  {preFooter}
                 </p>
                 <div className="flex items-center gap-2 mt-3 sm:flex">
                   {footer}
