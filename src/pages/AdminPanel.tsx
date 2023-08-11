@@ -11,6 +11,7 @@ interface IParseRooms {
 }
 
 export const Admin = () => {
+  const [isLoading, setLoading] = useState(true);
   const [isModal, setIsModal] = useState(false);
   const [isSettingsModal, setSettingsModal] = useState(false);
   const [reserve, setReserve] = useState(false);
@@ -25,6 +26,33 @@ export const Admin = () => {
   const [indexRoom, setRoomIndex] = useState<number>();
   const [placesRoom, setPlacesRoom] = useState<number>(0);
   const [randomPlaces, setRandomPlaces] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  useEffect(() => {
+    const imageElements = document.querySelectorAll('img');
+    const imageCount = imageElements.length;
+
+    let loadedCount = 0;
+
+    const handleImageLoad = () => {
+      loadedCount++;
+      if (loadedCount === imageCount) {
+        setImagesLoaded(true);
+      }
+    };
+
+    // Подписка на событие загрузки изображений
+    imageElements.forEach((img) => {
+      img.addEventListener('load', handleImageLoad);
+    });
+
+    // Отписка от событий загрузки изображений после размонтирования компонента
+    return () => {
+      imageElements.forEach((img) => {
+        img.removeEventListener('load', handleImageLoad);
+      });
+    };
+  }, []);
 
   function deleteRoom() {
     setIsModal(false);
