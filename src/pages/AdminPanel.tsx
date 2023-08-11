@@ -1,5 +1,5 @@
 import { Modal } from "components/Modal";
-import { rooms } from "constants";
+import { reserveItem, rooms, unreserveItem } from "constants";
 import { useEffect, useState } from "react";
 
 interface IParseRooms {
@@ -8,13 +8,12 @@ interface IParseRooms {
   indexRoom: number,
   placesRoom: number,
   description: string,
+  reserved: boolean;
 }
 
 export const Admin = () => {
-  const [isLoading, setLoading] = useState(true);
   const [isModal, setIsModal] = useState(false);
   const [isSettingsModal, setSettingsModal] = useState(false);
-  const [reserve, setReserve] = useState(false);
 
   //string states
 
@@ -23,36 +22,12 @@ export const Admin = () => {
 
   //number states
 
-  const [indexRoom, setRoomIndex] = useState<number>();
+  const [indexRoom, setRoomIndex] = useState<number>(0);
   const [placesRoom, setPlacesRoom] = useState<number>(0);
   const [randomPlaces, setRandomPlaces] = useState(0);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  useEffect(() => {
-    const imageElements = document.querySelectorAll('img');
-    const imageCount = imageElements.length;
-
-    let loadedCount = 0;
-
-    const handleImageLoad = () => {
-      loadedCount++;
-      if (loadedCount === imageCount) {
-        setImagesLoaded(true);
-      }
-    };
-
-    // Подписка на событие загрузки изображений
-    imageElements.forEach((img) => {
-      img.addEventListener('load', handleImageLoad);
-    });
-
-    // Отписка от событий загрузки изображений после размонтирования компонента
-    return () => {
-      imageElements.forEach((img) => {
-        img.removeEventListener('load', handleImageLoad);
-      });
-    };
-  }, []);
+  // reserve
+  const [reserve, setReserve] = useState<boolean>();
 
   function deleteRoom() {
     setIsModal(false);
@@ -63,14 +38,43 @@ export const Admin = () => {
 
   useEffect(() => {
     setRandomPlaces(Math.floor(Math.random() * 8 + 1));
-    console.log('generated');
   }, []);
 
-  /// Функция которая задает рандомное значение и возвращает элемент
+  const freeRoom = (index) => {
+    unreserveItem(index);
+    setReserve(false);
+  };
+
+  const reserveRoom = (index) => {
+    reserveItem(index);
+    setReserve(true);
+  };
+
+  const parseRoom = ({
+    name,
+    isModal,
+    indexRoom,
+    placesRoom,
+    description,
+    reserved,
+  }: IParseRooms) => {
+    // console.log(rooms[indexRoom]);
+    /// Имя комнаты
+    setRoomName(name);
+    /// Модальное окно активное или нет
+    setIsModal(isModal);
+    /// Индекс румы в объекте
+    setRoomIndex(indexRoom);
+    /// Места в руме
+    setPlacesRoom(placesRoom);
+    /// Описание румы в модалке
+    setDescriptionRoom(description);
+    /// Зарезервированна ли комната
+    setReserve(reserved);
+  };
+
+  /// Функция которая возвращает элемент
   function placesRooms(places: any) {
-    console.log(`PLACES / 2 =  ${places / 2}`);
-    console.log(`RANDOM PLACES ${randomPlaces}`);
-    () => setReserve(randomPlaces >= places / 2);
     return (
       <>
         <h1>{!reserve ? `Свободных мест ${randomPlaces} / ${places}` : `Отель забронирован ${randomPlaces} / ${places}`}</h1>
@@ -84,39 +88,10 @@ export const Admin = () => {
       </>
     );
   }
-  const parseRoom = ({
-    name,
-    isModal,
-    indexRoom,
-    placesRoom,
-    description
-  }: IParseRooms) => {
-    // console.log(rooms[indexRoom]);
-    /// Имя комнаты
-    setRoomName(name);
-    /// Модальное окно активное или нет
-    setIsModal(isModal);
-    /// Индекс румы в объекте
-    setRoomIndex(indexRoom);
-    /// Места в руме
-    setPlacesRoom(placesRoom);
-    /// Описание румы в модалке
-    setDescriptionRoom(description);
-  };
 
   return (
     <>
       <div className="grid grid-cols-1 rounded-lg">
-        {/* <ControlPanel
-          isModal={isModal}
-          setModal={setIsModal}
-          isSettingsModal={isSettingsModal}
-          setSettingsModal={setSettingsModal}
-          roomName={roomName}
-          indexRoom={indexRoom}
-          placesRoom={placesRooms(placesRoom)}
-          description={descriptionRoom}
-        /> */}
         <Modal
           isVisible={isModal}
           title={roomName}
@@ -167,13 +142,13 @@ export const Admin = () => {
               <button
                 className="w-1/2 text-gray-800 bg-green-500 rounded-md 
             outline-none border ring-offset-2"
-                onClick={() => setReserve(false)}>
+                onClick={() => freeRoom(indexRoom)}>
                 Отменить бронь
               </button>
               <button
                 className="w-1/2 text-gray-800 bg-red-500 rounded-md 
             outline-none border ring-offset-2"
-                onClick={() => setReserve(true)}>
+                onClick={() => { reserveRoom(indexRoom); console.log(rooms[indexRoom]); }}>
                 Забронировать
               </button>
             </>
@@ -182,7 +157,14 @@ export const Admin = () => {
         {rooms.map((room, index) => (
           <>
             <div className="hover:bg-gray-200 cursor-pointer pb-4" key={index} onClick={() => {
-              parseRoom({ name: room.name, isModal: true, placesRoom: room.places, description: room.description, indexRoom: index });
+              parseRoom({
+                name: room.name,
+                isModal: true,
+                placesRoom: room.places,
+                description: room.description,
+                indexRoom: index,
+                reserved: room.reserved
+              });
             }}>
               <h1 className="text-center mt-3">
                 {room.name}
