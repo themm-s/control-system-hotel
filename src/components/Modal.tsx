@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect } from "react";
+import { useEffect } from "react";
 
 interface IModal {
   isVisible: boolean;
@@ -28,7 +28,7 @@ export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, foot
   });
 
   return !isVisible ? null : (
-    <>
+    <div>
       <div className="fixed inset-0 z-10 overflow-y-auto">
         <div
           className="fixed inset-0 w-full h-full bg-black opacity-40"
@@ -56,6 +56,6 @@ export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, foot
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
