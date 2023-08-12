@@ -4,7 +4,7 @@ interface IModal {
   isVisible: boolean;
   title: string;
   places?: any;
-  description?: JSX.Element;
+  description?: JSX.Element | string;
   status?: string | JSX.Element;
   preFooter?: string | JSX.Element;
   footer?: string | JSX.Element;
