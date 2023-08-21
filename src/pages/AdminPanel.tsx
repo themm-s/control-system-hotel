@@ -40,12 +40,12 @@ export const Admin = () => {
     setRandomPlaces(Math.floor(Math.random() * 8 + 1));
   }, []);
 
-  const freeRoom = (index) => {
+  const freeRoom = (index: number) => {
     unreserveItem(index);
     setReserve(false);
   };
 
-  const reserveRoom = (index) => {
+  const reserveRoom = (index: number) => {
     reserveItem(index);
     setReserve(true);
   };
@@ -91,72 +91,72 @@ export const Admin = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 rounded-lg">
-        <Modal
-          isVisible={isModal}
-          title={roomName}
-          description={descriptionRoom}
-          footer={
-            <>
-              <button
-                className="w-1/2 text-gray-800 bg-green-500 rounded-md 
-            outline-none border ring-offset-2 hover:bg-green-400"
-                onClick={deleteRoom}>
-                Да
-              </button>
-              <button
-                className="w-1/2 text-gray-800 bg-red-500 hover:bg-red-400 rounded-md 
-            outline-none border ring-offset-2"
-                onClick={() => setIsModal(false)}>
-                Нет
-              </button>
-            </>
-          }
-          preFooter={
+      <Modal
+        isVisible={isModal}
+        title={roomName}
+        description={descriptionRoom}
+        footer={
+          <>
             <button
-              className="w-full text-gray-200 bg-gray-700 rounded-md 
-            outline-none border ring-offset-2"
-              onClick={() => setSettingsModal(true)}>
-              Настройки
+              className="w-1/2 text-gray-800 bg-green-500 rounded-md 
+            outline-none border ring-offset-2 hover:bg-green-400"
+              onClick={deleteRoom}>
+              Да
             </button>
-          }
-          onClose={() => setIsModal(false)}
-        />
-        <Modal
-          isVisible={isSettingsModal}
-          title={"Настройки"}
-          description={placesRooms(placesRoom)}
-          places={
-            <>
-              <button
-                className="w-full text-gray-300 bg-gray-700 rounded-md 
+            <button
+              className="w-1/2 text-gray-800 bg-red-500 hover:bg-red-400 rounded-md 
+            outline-none border ring-offset-2"
+              onClick={() => setIsModal(false)}>
+              Нет
+            </button>
+          </>
+        }
+        preFooter={
+          <button
+            className="w-full text-gray-200 bg-gray-700 rounded-md 
+            outline-none border ring-offset-2"
+            onClick={() => setSettingsModal(true)}>
+            Настройки
+          </button>
+        }
+        onClose={() => setIsModal(false)}
+      />
+      <Modal
+        isVisible={isSettingsModal}
+        title={"Настройки"}
+        description={placesRooms(placesRoom)}
+        places={
+          <>
+            <button
+              className="w-full text-gray-300 bg-gray-700 rounded-md 
             outline-none border ring-offset-2 hover:bg-gray-600"
-                onClick={() => setSettingsModal(false)}>
-                Закрыть
-              </button>
-            </>
-          }
-          onClose={() => setSettingsModal(false)}
-          footer={
-            <>
-              <button
-                className="w-1/2 text-gray-800 bg-green-500 hover:bg-green-400 rounded-md 
+              onClick={() => setSettingsModal(false)}>
+              Закрыть
+            </button>
+          </>
+        }
+        onClose={() => setSettingsModal(false)}
+        footer={
+          <>
+            <button
+              className="w-1/2 text-gray-800 bg-green-500 hover:bg-green-400 rounded-md 
             outline-none border ring-offset-2"
-                onClick={() => freeRoom(indexRoom)}>
-                Отменить бронь
-              </button>
-              <button
-                className="w-1/2 text-gray-800 bg-red-500 hover:bg-red-400 rounded-md 
+              onClick={() => freeRoom(indexRoom)}>
+              Отменить бронь
+            </button>
+            <button
+              className="w-1/2 text-gray-800 bg-red-500 hover:bg-red-400 rounded-md 
             outline-none border ring-offset-2"
-                onClick={() => { reserveRoom(indexRoom); console.log(rooms[indexRoom]); }}>
-                Забронировать
-              </button>
-            </>
-          }
-        />
+              onClick={() => { reserveRoom(indexRoom); console.log(rooms[indexRoom]); }}>
+              Забронировать
+            </button>
+          </>
+        }
+      />
+      <div className="rounded-lg space-y-4 p-3">
         {rooms.map((room, index) => (
           <>
-            <div className="hover:bg-gray-950 cursor-pointer pb-4" key={index} onClick={() => {
+            <div className="hover:bg-[#2b1a6f] rounded-lg bg-[rgb(2,0,36)] cursor-pointer p-3" key={index} onClick={() => {
               parseRoom({
                 name: room.name,
                 isModal: true,
@@ -166,12 +166,11 @@ export const Admin = () => {
                 reserved: room.reserved
               });
             }}>
-              <h1 className="text-center mt-3">
+              <h1 className="text-start">
                 {room.name}
               </h1>
-              <div className="flex justify-center" >
-                <img src={room.icon} className="w-1/4 mt-3" />
-              </div>
+              <img src={room.icon} className="w-1/4 mt-3 rounded-lg" />
+              <h1 className="text-center bg-black mx-auto w-28 rounded-lg p-1 justify-center">{randomPlaces} / {room.places}</h1>
             </div>
           </>
         ))}
