@@ -1,4 +1,4 @@
-import { Modal } from "components/Modal";
+import { Modal } from "components/Modal/Modal";
 import { reserveItem, rooms, unreserveItem } from "constants";
 import { useEffect, useState } from "react";
 
@@ -166,11 +166,20 @@ export const Admin = () => {
                 reserved: room.reserved
               });
             }}>
-              <h1 className="text-start">
+              <h1 className="text-start text-lg ">
                 {room.name}
               </h1>
-              <img src={room.icon} className="w-1/4 mt-3 rounded-lg" />
-              <h1 className="text-center bg-black mx-auto w-28 rounded-lg p-1 justify-center">{randomPlaces} / {room.places}</h1>
+              <img src={room.icon} className="w-1/4 mt-3 border-2 border-blue-400 rounded-lg" />
+              <div className="grid grid-cols-2 text-center mx-auto w-1/3 justify-center">
+                <div className="w-1/2">
+                  <p>Места</p>
+                  <h1 className="bg-gray-800 rounded-lg p-1 mt-1">{randomPlaces} / {room.places}</h1>
+                </div>
+                <div className="w-1/2">
+                  <p className="">Статус</p>
+                  <h1 className={`rounded-lg  ${!room.reserved ? "bg-green-500" : "bg-red-500"} p-1 mt-1`}>{room.reserved ? "Забронирован" : "Свободен"}</h1>
+                </div>
+              </div>
             </div>
           </>
         ))}

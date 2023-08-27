@@ -31,7 +31,7 @@ export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, foot
     <div>
       <div className="fixed inset-0 z-10 overflow-y-auto">
         <div
-          className="fixed inset-0 w-full h-full bg-black opacity-40"
+          className="fixed inset-0 w-full h-full bg-opacity-10 animate-blur"
           onClick={onClose}
         />
         <div className="flex items-center min-h-screen px-4 py-8">
@@ -56,6 +56,6 @@ export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, foot
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
