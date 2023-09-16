@@ -1,6 +1,6 @@
 import { Modal } from "components/Modal/Modal";
 import { reserveItem, rooms, unreserveItem } from "constants";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface IParseRooms {
   name: string,
@@ -14,6 +14,8 @@ interface IParseRooms {
 export const Admin = () => {
   const [isModal, setIsModal] = useState(false);
   const [isSettingsModal, setSettingsModal] = useState(false);
+  const [isSettingsOutside, setOutside] = useState(false);
+  const [isSettingsInside, setInside] = useState(false);
 
   //string states
 
@@ -24,7 +26,6 @@ export const Admin = () => {
 
   const [indexRoom, setRoomIndex] = useState<number>(0);
   const [placesRoom, setPlacesRoom] = useState<number>(0);
-  const [randomPlaces, setRandomPlaces] = useState(0);
 
   // reserve
   const [reserve, setReserve] = useState<boolean>();
@@ -35,10 +36,6 @@ export const Admin = () => {
       rooms.splice(indexRoom, 1);
     }
   }
-
-  useEffect(() => {
-    setRandomPlaces(Math.floor(Math.random() * 8 + 1));
-  }, []);
 
   const freeRoom = (index: number) => {
     unreserveItem(index);
@@ -74,10 +71,10 @@ export const Admin = () => {
   };
 
   /// Функция которая возвращает элемент
-  function placesRooms(places: any) {
+  const placesRooms = (places: any) => {
     return (
       <>
-        <h1>{!reserve ? `Свободных мест${"\u00A0"} ${randomPlaces} / ${places}` : `Отель забронирован${"\u00A0"} ${randomPlaces} / ${places}`}</h1>
+        <h1>{!reserve ? `Свободных мест${"\u00A0"} ${places / 2} / ${places}` : `Отель забронирован${"\u00A0"} ${places / 2} / ${places}`}</h1>
         <div className="flex mt-2 justify-center ml-[5%] w-full text-center">
           Статус:
           <div className={`justify-center rounded-lg ml-2 border w-1/2
@@ -87,7 +84,18 @@ export const Admin = () => {
         </div>
       </>
     );
-  }
+  };
+
+  const settingsChoice = (e) => {
+    console.log(e.target.value);
+    if (e.target.value == 'outside') {
+      setOutside(true);
+      setInside(false);
+    } else {
+      setOutside(false);
+      setInside(true);
+    }
+  };
 
   return (
     <>
@@ -112,12 +120,15 @@ export const Admin = () => {
           </>
         }
         preFooter={
-          <button
-            className="w-full text-gray-200 bg-gray-700 rounded-md 
+          isSettingsOutside ?
+            ''
+            :
+            <button
+              className="w-full text-gray-200 bg-gray-700 rounded-md 
             outline-none border ring-offset-2"
-            onClick={() => setSettingsModal(true)}>
-            Настройки
-          </button>
+              onClick={() => setSettingsModal(true)}>
+              Настройки
+            </button>
         }
         onClose={() => setIsModal(false)}
       />
@@ -154,6 +165,16 @@ export const Admin = () => {
         }
       />
       <div className="rounded-lg space-y-4 p-3">
+        <p className="font">Расположение настроек:</p>
+        <div className="flex">
+
+          <input type="radio" id="settingsChoice" name="settings" value="inside" className="mx-2" onChange={(e) => settingsChoice(e)} />
+          <label htmlFor="settingsChoice">Внутри модального окна</label>
+
+          <input type="radio" id="settingsChoice2" name="settings" value="outside" className="mx-2" onChange={(e) => settingsChoice(e)} />
+          <label htmlFor="settingsChoice2">На элементе</label>
+
+        </div>
         {rooms.map((room, index) => (
           <>
             <div className="hover:bg-[#2b1a6f] rounded-lg bg-[rgb(2,0,36)] cursor-pointer p-3" key={index} onClick={() => {
@@ -166,14 +187,14 @@ export const Admin = () => {
                 reserved: room.reserved
               });
             }}>
-              <h1 className="text-start text-lg ">
-                {room.name}
+              <h1 className="flex text-start text-lg ">
+                {room.name} <input type="button" className="ml-auto bg-black" />3
               </h1>
               <img src={room.icon} className="w-1/4 mt-3 border-2 border-blue-400 rounded-lg" />
               <div className="grid grid-cols-2 text-center mx-auto w-1/3 justify-center">
                 <div className="w-1/2">
                   <p>Места</p>
-                  <h1 className="bg-gray-800 rounded-lg p-1 mt-1">{randomPlaces} / {room.places}</h1>
+                  <h1 className="bg-gray-800 rounded-lg p-1 mt-1">{room.places / 2} / {room.places}</h1>
                 </div>
                 <div className="w-1/2">
                   <p className="">Статус</p>

@@ -29,7 +29,7 @@ export const Modal: React.FC<IModal> = ({ isVisible = false, title, places, foot
 
   return !isVisible ? null : (
     <div>
-      <div className="fixed inset-0 z-10 overflow-y-auto">
+      <div className="fixed inset-0 w- z-10 overflow-y-auto">
         <div
           className="fixed inset-0 w-full h-full bg-opacity-10 animate-blur"
           onClick={onClose}
