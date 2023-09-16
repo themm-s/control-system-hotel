@@ -1,6 +1,6 @@
 import { Modal } from "components/Modal/Modal";
 import { reserveItem, rooms, unreserveItem } from "constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IParseRooms {
   name: string,
@@ -15,7 +15,6 @@ export const Admin = () => {
   const [isModal, setIsModal] = useState(false);
   const [isSettingsModal, setSettingsModal] = useState(false);
   const [isSettingsOutside, setOutside] = useState(false);
-  const [isSettingsInside, setInside] = useState(false);
 
   //string states
 
@@ -37,6 +36,16 @@ export const Admin = () => {
     }
   }
 
+  const controlRoom = (index: number) => {
+    if (reserve) {
+      unreserveItem(index);
+      setReserve(false);
+    } else {
+      reserveItem(index);
+      setReserve(true);
+    }
+  };
+
   const freeRoom = (index: number) => {
     unreserveItem(index);
     setReserve(false);
@@ -46,6 +55,10 @@ export const Admin = () => {
     reserveItem(index);
     setReserve(true);
   };
+
+  useEffect(() => {
+    console.log(isSettingsOutside);
+  }, [isSettingsOutside]);
 
   const parseRoom = ({
     name,
@@ -90,10 +103,10 @@ export const Admin = () => {
     console.log(e.target.value);
     if (e.target.value == 'outside') {
       setOutside(true);
-      setInside(false);
+      console.log("setOutside true");
     } else {
       setOutside(false);
-      setInside(true);
+      console.log("setOutside false");
     }
   };
 
@@ -120,7 +133,7 @@ export const Admin = () => {
           </>
         }
         preFooter={
-          isSettingsOutside ?
+          !isSettingsOutside ?
             ''
             :
             <button
@@ -168,27 +181,42 @@ export const Admin = () => {
         <p className="font">Расположение настроек:</p>
         <div className="flex">
 
-          <input type="radio" id="settingsChoice" name="settings" value="inside" className="mx-2" onChange={(e) => settingsChoice(e)} />
-          <label htmlFor="settingsChoice">Внутри модального окна</label>
+          <input type="radio" id="settingsChoice" name="settings" value="inside" className="mx-2" onChange={() => setOutside(false)} />
+          <label htmlFor="settingsChoice">На элементе</label>
 
-          <input type="radio" id="settingsChoice2" name="settings" value="outside" className="mx-2" onChange={(e) => settingsChoice(e)} />
-          <label htmlFor="settingsChoice2">На элементе</label>
+          <input type="radio" id="settingsChoice2" name="settings" value="outside" className="mx-2" onChange={() => setOutside(true)} />
+          <label htmlFor="settingsChoice2">Внутри модального окна</label>
 
         </div>
         {rooms.map((room, index) => (
           <>
-            <div className="hover:bg-[#2b1a6f] rounded-lg bg-[rgb(2,0,36)] cursor-pointer p-3" key={index} onClick={() => {
-              parseRoom({
-                name: room.name,
-                isModal: true,
-                placesRoom: room.places,
-                description: room.description,
-                indexRoom: index,
-                reserved: room.reserved
-              });
-            }}>
+            <div className={`rounded-lg bg-[rgb(2,0,36)] p-3 ${!isSettingsOutside ? "" : "hover:bg-[#2b1a6f] cursor-pointer"}`}
+              onClick={!isSettingsOutside ?
+                () => console.log(true)
+                :
+                () => {
+                  parseRoom({
+                    name: room.name,
+                    isModal: true,
+                    placesRoom: room.places,
+                    description: room.description,
+                    indexRoom: index,
+                    reserved: room.reserved
+                  });
+                }} key={index}>
               <h1 className="flex text-start text-lg ">
-                {room.name} <input type="button" className="ml-auto bg-black" />3
+                {room.name} <input type="button" id="settings" className="ml-auto bg-black" />
+                <label htmlFor="settings" className={`hover:bg-[#2b1a6f] ${!isSettingsOutside ? "" : "hidden"} absolute right-8 cursor-pointer rounded-lg bg-blue-700 p-1`}
+                  onClick={() => {
+                    parseRoom({
+                      name: room.name,
+                      isModal: true,
+                      placesRoom: room.places,
+                      description: room.description,
+                      indexRoom: index,
+                      reserved: room.reserved
+                    });
+                  }}>Настройки</label>
               </h1>
               <img src={room.icon} className="w-1/4 mt-3 border-2 border-blue-400 rounded-lg" />
               <div className="grid grid-cols-2 text-center mx-auto w-1/3 justify-center">
@@ -198,15 +226,22 @@ export const Admin = () => {
                 </div>
                 <div className="w-1/2">
                   <p className="">Статус</p>
-                  <h1 className={`rounded-lg  ${!room.reserved ? "bg-green-500" : "bg-red-500"} p-1 mt-1`}>{room.reserved ? "Забронирован" : "Свободен"}</h1>
+                  <h1
+                    onClick={
+                      !isSettingsOutside ?
+                        () => controlRoom(index)
+                        :
+                        () => { }
+                    }
+                    className={`rounded-lg  ${!room.reserved ? `bg-green-500 ${!isSettingsOutside ? "hover:bg-green-700" : ""}` : `bg-red-500 ${!isSettingsOutside ? "hover:bg-red-700" : ""}`} p-1 mt-1 cursor-pointer`}>
+                    {room.reserved ? "Забронирован" : "Свободен"}
+                  </h1>
                 </div>
               </div>
-            </div>
+            </div >
           </>
         ))}
-      </div>
+      </div >
     </>
   );
 };
-
-// room.name, true, index, room.places, room.description

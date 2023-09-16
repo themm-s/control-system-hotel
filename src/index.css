@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  user-select: none;
+}
+
 body { 
   background: linear-gradient(90deg, rgb(2,0,36) 0%, #360979 35%, rgb(3, 203, 156) 100%);
   color: white
