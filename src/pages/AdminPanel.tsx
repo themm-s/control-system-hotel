@@ -99,17 +99,6 @@ export const Admin = () => {
     );
   };
 
-  const settingsChoice = (e) => {
-    console.log(e.target.value);
-    if (e.target.value == 'outside') {
-      setOutside(true);
-      console.log("setOutside true");
-    } else {
-      setOutside(false);
-      console.log("setOutside false");
-    }
-  };
-
   return (
     <>
       <Modal
@@ -134,14 +123,17 @@ export const Admin = () => {
         }
         preFooter={
           !isSettingsOutside ?
-            ''
+            <h1 className="mx-auto bg-gradient-to-tr from-blue-900 to-purple-900 rounded-xl py-2 px-5">Удалить?</h1>
             :
-            <button
-              className="w-full text-gray-200 bg-gray-700 rounded-md 
+            <>
+              <button
+                className="w-full text-gray-200 bg-gray-700 rounded-md 
             outline-none border ring-offset-2"
-              onClick={() => setSettingsModal(true)}>
-              Настройки
-            </button>
+                onClick={() => setSettingsModal(true)}>
+                Настройки
+              </button>
+              <h1 className="mx-auto bg-gradient-to-tr from-blue-900 to-purple-900 rounded-xl py-2 px-5">Удалить?</h1>
+            </>
         }
         onClose={() => setIsModal(false)}
       />
@@ -178,7 +170,7 @@ export const Admin = () => {
         }
       />
       <div className="rounded-lg space-y-4 p-3">
-        <p className="font">Расположение настроек:</p>
+        <p className="">Расположение настроек:</p>
         <div className="flex">
 
           <input type="radio" id="settingsChoice" name="settings" value="inside" className="mx-2" onChange={() => setOutside(false)} />
@@ -206,7 +198,7 @@ export const Admin = () => {
                 }} key={index}>
               <h1 className="flex text-start text-lg ">
                 {room.name} <input type="button" id="settings" className="ml-auto bg-black" />
-                <label htmlFor="settings" className={`hover:bg-[#2b1a6f] ${!isSettingsOutside ? "" : "hidden"} absolute right-8 cursor-pointer rounded-lg bg-blue-700 p-1`}
+                <label htmlFor="settings" className={`hover:bg-[#2b1a6f] ${!isSettingsOutside ? "" : "hidden"} absolute right-8 px-3 cursor-pointer rounded-lg bg-blue-700 p-1`}
                   onClick={() => {
                     parseRoom({
                       name: room.name,
@@ -233,7 +225,7 @@ export const Admin = () => {
                         :
                         () => { }
                     }
-                    className={`rounded-lg  ${!room.reserved ? `bg-green-500 ${!isSettingsOutside ? "hover:bg-green-700" : ""}` : `bg-red-500 ${!isSettingsOutside ? "hover:bg-red-700" : ""}`} p-1 mt-1 cursor-pointer`}>
+                    className={`rounded-lg ${!room.reserved ? `bg-green-500 ${!isSettingsOutside ? "hover:bg-green-700" : ""}` : `bg-red-500 ${!isSettingsOutside ? "hover:bg-red-700" : ""}`} p-1 mt-1 cursor-pointer`}>
                     {room.reserved ? "Забронирован" : "Свободен"}
                   </h1>
                 </div>

@@ -6,6 +6,11 @@
   user-select: none;
 }
 
+div {
+  margin: auto;
+  
+}
+
 body { 
   background: linear-gradient(90deg, rgb(2,0,36) 0%, #360979 35%, rgb(3, 203, 156) 100%);
   color: white
@@ -22,3 +27,4 @@ body {
 .animate-blur {
   animation: blur-animation 0.5s forwards;
 }
+
